@@ -529,7 +529,7 @@ class SX127x: public PhysicalLayer {
     
     // basic methods
     int16_t begin(uint8_t chipVersion, uint8_t syncWord, uint8_t currentLimit, uint16_t preambleLength);
-    int16_t beginFSK(uint8_t chipVersion, float br, float freqDev, float rxBw, uint8_t currentLimit);
+    int16_t beginFSK(uint8_t chipVersion, float br, float freqDev, float rxBw, uint8_t currentLimit, bool ook);
     int16_t transmit(String& str, uint8_t addr = 0);
     int16_t transmit(const char* str, uint8_t addr = 0);
     int16_t transmit(uint8_t* data, size_t len, uint8_t addr = 0);

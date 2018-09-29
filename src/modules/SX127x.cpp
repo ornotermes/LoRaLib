@@ -45,7 +45,7 @@ int16_t SX127x::begin(uint8_t chipVersion, uint8_t syncWord, uint8_t currentLimi
   return(state);
 }
 
-int16_t SX127x::beginFSK(uint8_t chipVersion, float br, float freqDev, float rxBw, uint8_t currentLimit) {
+int16_t SX127x::beginFSK(uint8_t chipVersion, float br, float freqDev, float rxBw, uint8_t currentLimit, bool ook) {
   // set module properties
   _mod->init(USE_SPI, INT_BOTH);
   
@@ -60,11 +60,22 @@ int16_t SX127x::beginFSK(uint8_t chipVersion, float br, float freqDev, float rxB
   
   // check currently active modem
   int16_t state;
-  if(getActiveModem() != SX127X_FSK_OOK) {
-    // set FSK mode
-    state = setActiveModem(SX127X_FSK_OOK);
-    if(state != ERR_NONE) {
-      return(state);
+  if(!ook){
+    if(getActiveModem() != SX127X_FSK_OOK) {
+      // set FSK mode
+      state = setActiveModem(SX127X_FSK_OOK);
+      if(state != ERR_NONE) {
+        return(state);
+      }
+    }
+  }
+  else{
+    if(getActiveModem() != SX127X_FSK_OOK | SX127X_MODULATION_OOK) {
+      // set OOK mode
+      state = setActiveModem(SX127X_FSK_OOK | SX127X_MODULATION_OOK);
+      if(state != ERR_NONE) {
+        return(state);
+      }
     }
   }
   
